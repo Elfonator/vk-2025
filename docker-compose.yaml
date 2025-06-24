@@ -1,0 +1,44 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vk-fe
+    ports:
+      - "8080:80"
+    networks:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vk-be
+    ports:
+      - "8081:80"
+    networks:
+      - backend
+    depends_on:
+      - database
+    env_file:
+      - ./backend/.env
+
+  database:
+    image: postgres:15-alpine
+    container_name: vk-db
+    restart: always
+    networks:
+      - backend
+    volumes:
+      - vk-postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: vkuser
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: vkdb
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  vk-postgres-data:
