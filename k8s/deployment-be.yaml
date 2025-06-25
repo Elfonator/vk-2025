@@ -1,44 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kuber-be
-  namespace: kuber
+  name: processor-be
+  namespace: exam-elfo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kuber-be
+      app: processor-be
   template:
     metadata:
       labels:
-        app: kuber-be
+        app: processor-be
     spec:
       imagePullSecrets:
         - name: regcred
       containers:
         - name: backend
-          image: elfonator/kuber-be
+          image: elfonator/exam-be
           ports:
             - containerPort: 3000
           env:
-            - name: UPLOAD_DIR
-              valueFrom:
-                configMapKeyRef:
-                  name: kuber-config
-                  key: UPLOAD_DIR
-            - name: ALLOWED_TYPES
-              valueFrom:
-                configMapKeyRef:
-                  name: kuber-config
-                  key: ALLOWED_TYPES
-            - name: SECRET_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: SECRET_TOKEN
+            - name: INPUT_DIR
+              value: /input
+            - name: OUTPUT_DIR
+              value: /output
           volumeMounts:
-            - mountPath: /uploads
-              name: upload-volume
+            - name: processor-volume
+              mountPath: /input
+              subPath: input
+            - name: processor-volume
+              mountPath: /output
+              subPath: output
           readinessProbe:
             httpGet:
               path: /health
@@ -51,14 +44,7 @@ spec:
               port: 3000
             initialDelaySeconds: 15
             periodSeconds: 20
-      initContainers:
-        - name: init-upload-dir
-          image: busybox
-          command: ["sh", "-c", "mkdir -p /uploads && chmod 777 /uploads"]
-          volumeMounts:
-            - mountPath: /uploads
-              name: upload-volume
       volumes:
-        - name: upload-volume
+        - name: processor-volume
           persistentVolumeClaim:
-            claimName: kuber-pvc
+            claimName: processor-pvc

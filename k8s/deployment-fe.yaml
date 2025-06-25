@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kuber-fe
-  namespace: kuber
+  name: processor-fe
+  namespace: exam-elfo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kuber-fe
+      app: processor-fe
   template:
     metadata:
       labels:
-        app: kuber-fe
+        app: processor-fe
     spec:
       imagePullSecrets:
         - name: regcred
       containers:
         - name: frontend
-          image: elfonator/kuber-fe
+          image: elfonator/exam-fe
           ports:
             - containerPort: 80
           readinessProbe:

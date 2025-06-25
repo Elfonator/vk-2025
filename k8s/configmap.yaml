@@ -1,11 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: kuber-config
-  namespace: kuber
+  name: processor-config
+  namespace: exam-elfo
 data:
-  UPLOAD_DIR: "/uploads"
-  ALLOWED_TYPES: "image/png,image/jpeg,image/jpg"
-
-
-  
+  INPUT_DIR: "/input"
+  OUTPUT_DIR: "/output"
+  ALLOWED_TYPES: "text/plain,text/csv,application/json"

@@ -1,14 +1,13 @@
 {
   "name": "upload-backend",
   "version": "1.0.0",
-  "description": "Simple image upload API for Kubernetes deployment",
+  "description": "Simple input/output app for Kubernetes deployment",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "author": "Your Name",
-  "license": "MIT",
+  "author": "Elfo",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
