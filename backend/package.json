@@ -1,7 +1,21 @@
 {
+  "name": "upload-backend",
+  "version": "1.0.0",
+  "description": "Simple image upload API for Kubernetes deployment",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "pg": "^8.14.1"
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }

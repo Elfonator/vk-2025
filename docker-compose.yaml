@@ -3,42 +3,29 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: vk-fe
+    container_name: kuber-fe
     ports:
       - "8080:80"
     networks:
       - backend
+    env_file:
+      - ./frontend/.env
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: vk-be
+    container_name: kuber-be
+    restart: always
     ports:
-      - "8081:80"
+      - "8081:3000"   # Express beží na 3000
+    volumes:
+      - ./backend/uploads:/app/uploads
     networks:
       - backend
-    depends_on:
-      - database
     env_file:
       - ./backend/.env
-
-  database:
-    image: postgres:15-alpine
-    container_name: vk-db
-    restart: always
-    networks:
-      - backend
-    volumes:
-      - vk-postgres-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: vkuser
-      POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: vkdb
 
 networks:
   backend:
     driver: bridge
-
-volumes:
-  vk-postgres-data:

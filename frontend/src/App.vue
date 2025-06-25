@@ -1,60 +1,31 @@
+<!-- src/App.vue -->
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import { ref, onMounted } from 'vue'
-const status = ref('loading...')
+import { ref } from 'vue';
+import Gallery from './components/Gallery.vue';
 
-onMounted(async () => {
-  try {
-    const res = await fetch('/api/status')
-    const data = await res.json()
-    status.value = data.status || 'unknown'
-  } catch (err) {
-    status.value = 'API ERROR'
-    console.error(err)
-  }
-})
+const showDialog = ref(false);
+
+function openUpload() {
+  showDialog.value = true;
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <v-app>
+    <v-app-bar color="teal-darken-4" dark>
+      <v-toolbar-title>K8S Upload Gallery</v-toolbar-title>
+    </v-app-bar>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <v-main>
+      <v-container class="mt-4">
+        <v-row justify="center">
+          <v-btn color="teal-lighten-3" @click="openUpload" elevation="4">
+            Add Image
+          </v-btn>
+        </v-row>
 
-    </div>
-  </header>
-
-  <main>
-    <p>Backend status: {{ status }}</p>
-  </main>
+        <Gallery v-model:showDialog="showDialog" />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>

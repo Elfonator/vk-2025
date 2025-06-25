@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuber-be
+  namespace: kuber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kuber-be
+  template:
+    metadata:
+      labels:
+        app: kuber-be
+    spec:
+      containers:
+        - name: backend
+          image: elfonator/kuber-be
+          ports:
+            - containerPort: 3000
+          env:
+            - name: UPLOAD_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: kuber-config
+                  key: UPLOAD_DIR
+            - name: ALLOWED_TYPES
+              valueFrom:
+                configMapKeyRef:
+                  name: kuber-config
+                  key: ALLOWED_TYPES
+            - name: SECRET_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: SECRET_TOKEN
+          volumeMounts:
+            - mountPath: /uploads
+              name: upload-volume
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      initContainers:
+        - name: init-upload-dir
+          image: busybox
+          command: ["sh", "-c", "mkdir -p /uploads && chmod 777 /uploads"]
+          volumeMounts:
+            - mountPath: /uploads
+              name: upload-volume
+      volumes:
+        - name: upload-volume
+          persistentVolumeClaim:
+            claimName: kuber-pvc

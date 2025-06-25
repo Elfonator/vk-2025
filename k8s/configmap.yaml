@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kuber-config
+  namespace: kuber
+data:
+  UPLOAD_DIR: "/uploads"
+  ALLOWED_TYPES: "image/png,image/jpeg"
+
+
+  
