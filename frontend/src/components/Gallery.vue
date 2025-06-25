@@ -1,6 +1,6 @@
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 const props = defineProps({
@@ -71,17 +71,15 @@ onMounted(loadImages);
 
   <v-dialog v-model="props.showDialog" persistent max-width="500px">
     <v-card>
-      <v-card-title>Add New Image</v-card-title>
+      <v-card-title style="align-self: center">Add New Image</v-card-title>
       <v-card-text>
-        <v-form>
           <v-file-input
               label="Select Image"
               v-model="formData.file"
               accept="image/*"
-              show-size
               required
-          />
-        </v-form>
+
+              ></v-file-input>
       </v-card-text>
       <v-card-actions>
         <v-spacer />

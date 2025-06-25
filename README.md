@@ -1,4 +1,4 @@
-# Kubernetes Image Upload App
+# Kubernetes - Image Upload App
 
 ## 📌 Application Overview
 
