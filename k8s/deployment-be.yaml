@@ -13,6 +13,8 @@ spec:
       labels:
         app: kuber-be
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: backend
           image: elfonator/kuber-be
