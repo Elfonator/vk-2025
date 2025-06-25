@@ -39,6 +39,7 @@ async function submitForm() {
 
   try {
     await axios.post(`${api}/upload`, form);
+    formData.value.file = null;
     closeDialog();
     await loadImages();
   } catch (err) {
@@ -58,7 +59,9 @@ onMounted(loadImages);
         cols="12" sm="6" md="4" lg="3"
     >
       <v-card elevation="2">
-        <v-img :src="img.file_path" height="200px" cover />
+        <a :href="img.file_path" target="_blank">
+          <v-img :src="img.file_path" height="300px" cover class="hover:opacity-80 transition-opacity" />
+        </a>
         <v-card-text>
           <div class="text-caption">{{ img.description }}</div>
         </v-card-text>

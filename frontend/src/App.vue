@@ -17,9 +17,9 @@ function openUpload() {
     </v-app-bar>
 
     <v-main>
-      <v-container class="mt-4">
+      <v-container class="mt-4 mb-4">
         <v-row justify="center">
-          <v-btn color="teal-lighten-3" @click="openUpload" elevation="4">
+          <v-btn color="teal-lighten-3" @click="openUpload" elevation="4" size="large">
             Add Image
           </v-btn>
         </v-row>
