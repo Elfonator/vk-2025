@@ -5,7 +5,7 @@ metadata:
   namespace: kuber
 data:
   UPLOAD_DIR: "/uploads"
-  ALLOWED_TYPES: "image/png,image/jpeg"
+  ALLOWED_TYPES: "image/png,image/jpeg,image/jpg"
 
 
   
